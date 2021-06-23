@@ -6,15 +6,18 @@ green='\e[1;32m%s\e[0m\n'
 blue='\e[1;34m%s\e[0m\n'
 
 # Set your Azure Subscription
-SUBSCRIPTION=xxxxxxxxxxxxxxxxxxxxxx
+SUBSCRIPTION=xxxxxxxxxxxxx-xxxxxxxx-xxxx-x
 
 # choice of dev|prod
 ENVIRONMENT=local
 APP_PREFIX=TestAKS
 RG_NAME="rg-${APP_PREFIX}-Cluster-${ENVIRONMENT}"
+RG_VNET_NAME="rg-${APP_PREFIX}-Networking-${ENVIRONMENT}"
+VNET_NAME="vnet-${ENVIRONMENT}-AKSPrivateKubenet"
 LOCATION=northeurope
 DEPLOYMENT_NAME=deployAks
 PARAM_FILE="./${DEPLOYMENT_NAME}.parameters.${ENVIRONMENT}.json"
+
 
 
 
@@ -53,3 +56,17 @@ printf "$green" "AKS managed RG:    $aksNodesRG"
 printf "$green" "AKS Tenant ID:     $aksTenantID"
 printf "$green" "AKS SP ID:         $aksSPID"
 printf "$green" "AKS Identity Type: $aksIdentityType"
+
+
+
+
+# 5. Get the AKS SPID role assignment network contributor on VNET
+VNET_ID=$(az network vnet show --resource-group $RG_VNET_NAME --name $VNET_NAME --query id -o tsv)
+printf "$green" "VNET ID:           $VNET_ID"
+az role assignment create --assignee $aksSPID --scope $VNET_ID --role "Network Contributor"
+
+# az aks nodepool show -g rg-TestAKS-Cluster-local --cluster-name aks-kubenet-b6oy4p5fr7gtk -n systempool
+# az aks show -g rg-TestAKS-Cluster-local -n aks-kubenet-b6oy4p5fr7gtk --query "servicePrincipalProfile"
+
+
+# az aks get-credentials -g rg-TestAKS-Cluster-local -n aks-kubenet-b6oy4p5fr7gtk

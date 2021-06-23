@@ -10,6 +10,9 @@
         },
         "snetID": {
             "value": "/subscriptions/0a52391c-0d81-434e-90b4-d04f5c670e8a/resourceGroups/rg-AksPrivateKubenet-local/providers/Microsoft.Network/virtualNetworks/vnet-Local-AKSPrivateKubenet/subnets/snet-aksNodes"
+        },
+        "attachACR": {
+            "value": true
         }
     }
 }

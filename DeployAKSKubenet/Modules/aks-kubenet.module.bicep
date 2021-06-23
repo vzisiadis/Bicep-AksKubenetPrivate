@@ -122,6 +122,7 @@ resource aks_workspace 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
 
 
 output aksID string = aks.id
+output aksName string = aks.name
 //output apiServerAddress string = aks.properties.privateFQDN
 output aksNodesRG string = aks.properties.nodeResourceGroup
 output identity object = {
