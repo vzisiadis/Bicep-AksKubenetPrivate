@@ -16,12 +16,6 @@
         },
         "isAksPrivate": {
             "value": true
-        },
-        "vnetName": {
-            "value": "vnet-Local-AKSPrivateKubenet"
-        },
-        "vnetID": {
-            "value": "/subscriptions/xxxxxxxx-xxxxxxx-xxxxx-xxxx/resourceGroups/rg-TestAKS-Networking-local/providers/Microsoft.Network/virtualNetworks/vnet-Local-AKSPrivateKubenet"
         }
     }
 }

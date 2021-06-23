@@ -9,8 +9,6 @@ param resourceTags object
 param snetID string 
 param attachACR bool
 param isAksPrivate bool
-param vnetName string
-param vnetID string
 param aksDnsPrefix string = 'cluster01'
 // param vnetRG string
 
@@ -46,40 +44,6 @@ module acr 'Modules/acr.module.bicep' = if (attachACR) {
     tags: resourceTags
   }
 }
-
-module privateLinkVnet 'Modules/privateDnsVnetLink.module.bicep' = if (isAksPrivate) {
-  name: 'privateLinkVnetDeployment'
-  dependsOn: [
-    aks
-  ]
-  scope: resourceGroup('rg-${appPrefix}-MC-${aksName}-${aksDnsPrefix}')
-  params: {    
-    privateDnsZoneName: aks.outputs.apiServerAddress
-    registrationEnabled: false
-    vnetID: vnetID
-    vnetName: vnetName
-    tags: resourceTags
-  }
-}
-
-
-// ATTENTION: if the vnet is on other RG you cannot get a reference to that, so the below snippet fails
-// // //get a reference of the existing Vnet (which possibly resides on a different RG)
-// resource vnetRef 'Microsoft.Network/virtualNetworks@2021-02-01' existing = {
-//   scope: resourceGroup(vnetRG)
-//   name: vnetName
-// }
-
-// //assign
-// resource roleAssignmentNetworkContributor 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
-//   scope: vnetRef
-//   name: roleNameGuid
-//   properties: {
-//     roleDefinitionId: NetworkContributorRoleAssignment
-//     principalId: aks.outputs.identity.principalId
-//   }
-// }
-
 
 output aksID string = aks.outputs.aksID
 output aksName string = aks.outputs.aksName
