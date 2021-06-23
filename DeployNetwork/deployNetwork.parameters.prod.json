@@ -1,0 +1,22 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceTags": {
+            "value": {
+                "Environment": "Prod",
+                "Project": "AKSPrivateKubenet"
+            }
+        },
+        "vmJumpBox": {
+            "value": {
+                "name": "vmJumpBoxProd",
+                "adminUserName": "vmadmin",
+                "adminPassword": "MY_SECURE_PASSWORD",
+                "dnsLabelPrefix": "MY_DNS_PREFIX",
+                "vmSize": "Standard_D2_v3",
+                "windowsOSVersion": "2019-Datacenter"
+            }
+        }
+    }
+}

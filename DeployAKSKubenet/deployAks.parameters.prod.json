@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceTags": {
+            "value": {
+                "Environment": "Prod",
+                "Project": "AKSPrivateKubenet"
+            }
+        },
+        "snetID": {
+            "value": "/subscriptions/0a52391c-0d81-434e-90b4-d04f5c670e8a/resourceGroups/rg-AksPrivateKubenet-local/providers/Microsoft.Network/virtualNetworks/vnet-Local-AKSPrivateKubenet/subnets/snet-aksNodes"
+        }
+    }
+}
