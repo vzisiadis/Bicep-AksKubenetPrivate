@@ -10,12 +10,11 @@ SUBSCRIPTION=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx
 
 # choice of dev|prod
 ENVIRONMENT=local
-APP_PREFIX=TestAKS
-RG_NAME="rg-${APP_PREFIX}-Networking-${ENVIRONMENT}"
 LOCATION=northeurope
 DEPLOYMENT_NAME=deployNetwork
 PARAM_FILE="./${DEPLOYMENT_NAME}.parameters.${ENVIRONMENT}.json"
-
+APP_PREFIX=$(cat $PARAM_FILE | jq -r .parameters.appPrefix.value)
+RG_NAME="rg-${APP_PREFIX}-Networking-${ENVIRONMENT}"
 
 
 # Code - do not change anything here on deployment

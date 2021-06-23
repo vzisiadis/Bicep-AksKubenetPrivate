@@ -9,10 +9,19 @@
             }
         },
         "snetID": {
-            "value": "/subscriptions/0a52391c-0d81-434e-90b4-d04f5c670e8a/resourceGroups/rg-AksPrivateKubenet-local/providers/Microsoft.Network/virtualNetworks/vnet-Local-AKSPrivateKubenet/subnets/snet-aksNodes"
+            "value": "/subscriptions/xxxxxxxxx-xxxxxx-xxxxxx-xxxxxxxx-xxx/resourceGroups/rg-AksPrivateKubenet-local/providers/Microsoft.Network/virtualNetworks/vnet-Local-AKSPrivateKubenet/subnets/snet-aksNodes"
         },
         "attachACR": {
             "value": true
+        },
+        "isAksPrivate": {
+            "value": true
+        },
+        "vnetName": {
+            "value": "vnet-Local-AKSPrivateKubenet"
+        },
+        "vnetID": {
+            "value": "/subscriptions/xxxxxxxxxxxxxxxxx-xxxxxxxxxxxx-xxxxxx-x/resourceGroups/rg-TestAKS-Networking-local/providers/Microsoft.Network/virtualNetworks/vnet-Local-AKSPrivateKubenet"
         }
     }
 }

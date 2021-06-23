@@ -3,7 +3,7 @@ targetScope = 'resourceGroup'
 
 // PARAMS General
 param suffix string = 'AKSPrivateKubenet'
-
+param appPrefix string
 // params exported on param file
 param resourceTags object
 
