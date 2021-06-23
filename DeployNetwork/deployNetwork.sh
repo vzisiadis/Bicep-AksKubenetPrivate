@@ -10,7 +10,8 @@ SUBSCRIPTION=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx
 
 # choice of dev|prod
 ENVIRONMENT=local
-RG_NAME="rg-AksPrivateKubenet-${ENVIRONMENT}"
+APP_PREFIX=TestAKS
+RG_NAME="rg-${APP_PREFIX}-Networking-${ENVIRONMENT}"
 LOCATION=northeurope
 DEPLOYMENT_NAME=deployNetwork
 PARAM_FILE="./${DEPLOYMENT_NAME}.parameters.${ENVIRONMENT}.json"
@@ -42,5 +43,7 @@ outputs=$(az deployment group show --name $DEPLOYMENT_NAME -g $RG_NAME --query p
 
 # store them in variables
 aksSubnetID=$(jq -r .aksSubnetID.value <<<$outputs)
+vnetName=$(jq -r .vnetName.value <<<$outputs)
 
 printf "$green" "AKS Subnet ID:   $aksSubnetID"
+printf "$green" "Vnet Name:       $vnetName"

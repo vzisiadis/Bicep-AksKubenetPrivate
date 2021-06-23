@@ -84,6 +84,7 @@ module bastion 'modules/bastion.module.bicep' = {
 }
 
 output aksSubnetID string = vnet.outputs.snetAksID
+output vnetName string = vnet.outputs.vnetName
 // output dataLakeID string = dataLake.outputs.id
 // output akvID string = keyVault.outputs.id
 // output akvURL string = 'https://${toLower(keyVault.outputs.name)}.vault.azure.net/'//https://kv-dev-databricksexplore.vault.azure.net/

@@ -10,7 +10,7 @@ param enableRBAC bool = true
 param dnsPrefix string = 'cluster01'
 
 @description(' Name of the resource group containing agent pool nodes')
-param nodeResourceGroup string = 'rg-MC-${dnsPrefix}-${name}'
+param nodeResourceGroup string = 'rg-TestAKS-MC-${name}-${dnsPrefix}'
 
 @minValue(0)
 @maxValue(1023)
@@ -28,7 +28,7 @@ param agentCount int = 3
 param maxPods int = 110
 
 //todo: add some reccomendations here
-param agentVMSize string = 'Standard_DS2_v2'
+param agentVMSize string = 'Standard_D2s_v4'
 
 @description('A CIDR notation IP range from which to assign service cluster IPs. It must not overlap with any Subnet IP ranges. It can be any private network CIDR such as, 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 ')
 param serviceCidr string = '10.0.0.0/16'
@@ -43,7 +43,7 @@ param podCidr string = '10.244.0.0/16'
 param dockerBridgeCidr string = '172.17.0.1/16'
 
 
-var aksLawsName = 'laws-${name}-${uniqueString(resourceGroup().id)}'
+var aksLawsName = 'laws-${name}'
 
 
 //TODO 1: conditional handling of enableAutoScaling: false
@@ -82,9 +82,9 @@ resource aks 'Microsoft.ContainerService/managedClusters@2021-03-01' = {
     // apiServerAccessProfile:{
     //   enablePrivateCluster:true
     // }
-    // servicePrincipalProfile: {
-    //   clientId: 'msi'
-    // }
+    servicePrincipalProfile: {
+      clientId: 'msi'
+    }
     networkProfile: {
       networkPlugin: 'kubenet'
       loadBalancerSku: 'standard'
@@ -124,3 +124,8 @@ resource aks_workspace 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
 output aksID string = aks.id
 //output apiServerAddress string = aks.properties.privateFQDN
 output aksNodesRG string = aks.properties.nodeResourceGroup
+output identity object = {
+  tenantId: aks.identity.tenantId
+  principalId: aks.identity.principalId
+  type: aks.identity.type
+}

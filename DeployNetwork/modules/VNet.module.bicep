@@ -10,7 +10,7 @@ param snetAdmin object
 param snetBastion object
 
 
-resource vnet 'Microsoft.Network/virtualNetworks@2020-11-01' = {
+resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: name
   location: region
   tags: tags
@@ -57,6 +57,7 @@ resource vnet 'Microsoft.Network/virtualNetworks@2020-11-01' = {
 
 
 output vnetID string = vnet.id
+output vnetName string = vnet.name
 output snetAksID string = vnet.properties.subnets[0].id
 output snetPEID string = vnet.properties.subnets[1].id
 output snetAdminID string = vnet.properties.subnets[2].id

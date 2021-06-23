@@ -10,7 +10,8 @@ SUBSCRIPTION=xxxxxxxxxxxxxxxxxxxxxx
 
 # choice of dev|prod
 ENVIRONMENT=local
-RG_NAME="rg-AksPrivateKubenet-${ENVIRONMENT}"
+APP_PREFIX=TestAKS
+RG_NAME="rg-${APP_PREFIX}-Cluster-${ENVIRONMENT}"
 LOCATION=northeurope
 DEPLOYMENT_NAME=deployAks
 PARAM_FILE="./${DEPLOYMENT_NAME}.parameters.${ENVIRONMENT}.json"
@@ -43,6 +44,12 @@ outputs=$(az deployment group show --name $DEPLOYMENT_NAME -g $RG_NAME --query p
 # store them in variables
 aksID=$(jq -r .aksID.value <<<$outputs)
 aksNodesRG=$(jq -r .aksNodesRG.value <<<$outputs)
+aksTenantID=$(jq -r .aksTenantID.value <<<$outputs)
+aksSPID=$(jq -r .aksSPID.value <<<$outputs)
+aksIdentityType=$(jq -r .aksIdentityType.value <<<$outputs)
 
 printf "$green" "AKS  ID:           $aksID"
 printf "$green" "AKS managed RG:    $aksNodesRG"
+printf "$green" "AKS Tenant ID:     $aksTenantID"
+printf "$green" "AKS SP ID:         $aksSPID"
+printf "$green" "AKS Identity Type: $aksIdentityType"
