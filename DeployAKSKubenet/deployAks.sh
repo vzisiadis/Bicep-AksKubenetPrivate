@@ -9,7 +9,7 @@ blue='\e[1;34m%s\e[0m\n'
 SUBSCRIPTION=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx
 
 # choice of dev|prod
-ENVIRONMENT=local
+ENVIRONMENT=dev
 DEPLOYMENT_NAME=deployAks
 PARAM_FILE="./${DEPLOYMENT_NAME}.parameters.${ENVIRONMENT}.json"
 APP_PREFIX=$(cat $PARAM_FILE | jq -r .parameters.appPrefix.value)
