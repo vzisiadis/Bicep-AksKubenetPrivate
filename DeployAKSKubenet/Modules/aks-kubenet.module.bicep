@@ -24,7 +24,7 @@ param systemOsDiskSizeGB int = 80
 @minValue(0)
 @maxValue(1000)
 @description('Number of agents (VMs) to host docker containers. Allowed values must be in the range of 0 to 1000 (inclusive) for user pools and in the range of 1 to 1000 (inclusive) for system pools. The default value is 1.')
-param systemAgentCount int = 3
+param systemAgentCount int = 2
 
 @minValue(30)
 @maxValue(250)
@@ -98,7 +98,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2021-03-01' = {
         ]
         enableAutoScaling: true
         minCount: systemAgentCount
-        maxCount: systemAgentCount + 1
+        maxCount: systemAgentCount + 2
         vnetSubnetID: vnetSubnetID
         availabilityZones: [
           '1'
