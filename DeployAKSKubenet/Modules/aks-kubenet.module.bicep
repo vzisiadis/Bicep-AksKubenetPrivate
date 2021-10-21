@@ -14,7 +14,7 @@ param enableRBAC bool = true
 param aksDnsPrefix string
 
 @description('Name of the resource group containing agent pool nodes')
-param nodeResourceGroup string = 'rg-${appPrefix}-MC-${name}-${aksDnsPrefix}'
+param nodeResourceGroup string = 'rg-${appPrefix}-MC-${name}'
 
 @minValue(0)
 @maxValue(1023)
@@ -136,7 +136,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2021-03-01' = {
     networkProfile: {
       networkPlugin: 'kubenet'
       loadBalancerSku: 'standard'
-      // outboundType: 'loadBalancer'
+      // outboundType: 'loadBalancer'   TODO: 
       serviceCidr: serviceCidr
       dnsServiceIP: dnsServiceIP
       podCidr: podCidr
