@@ -7,6 +7,7 @@ param suffix string = 'AKS-TestBed'
 param resourceTags object
 param deployJumbBox bool
 param deployBastion bool
+param appPrefix string
 
 // PARAMS Vnet
 param vnetAddressSpace string = '192.168.0.0/24'
@@ -86,6 +87,6 @@ module bastion 'modules/bastion.module.bicep' =  if (deployBastion){
 
 output aksSubnetID string = vnet.outputs.snetAksID
 output vnetName string = vnet.outputs.vnetName
-// output dataLakeID string = dataLake.outputs.id
+ output appPrefix string = appPrefix
 // output akvID string = keyVault.outputs.id
 // output akvURL string = 'https://${toLower(keyVault.outputs.name)}.vault.azure.net/'//https://kv-dev-databricksexplore.vault.azure.net/

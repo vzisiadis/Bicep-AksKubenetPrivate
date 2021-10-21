@@ -8,6 +8,9 @@
                 "Project": "AKSPrivateKubenet"
             }
         },
+        "appPrefix": {
+            "value": "TestAKS"
+        },
         "vmJumpBox": {
             "value": {
                 "name": "vmJumpBoxProd",
