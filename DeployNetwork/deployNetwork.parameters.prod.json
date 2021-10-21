@@ -20,6 +20,12 @@
                 "vmSize": "Standard_D2_v3",
                 "windowsOSVersion": "2019-Datacenter"
             }
+        },
+        "deployJumbBox": {
+            "value": false
+        },
+        "deployBastion": {
+            "value": false
         }
     }
 }

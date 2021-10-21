@@ -2,10 +2,11 @@
 targetScope = 'resourceGroup'
 
 // PARAMS General
-param suffix string = 'AKSPrivateKubenet'
-param appPrefix string
+param suffix string = 'AKS-TestBed'
 // params exported on param file
 param resourceTags object
+param deployJumbBox bool
+param deployBastion bool
 
 // PARAMS Vnet
 param vnetAddressSpace string = '192.168.0.0/24'
@@ -58,7 +59,7 @@ module vnet 'modules/VNet.module.bicep' = {
 }
 
 
-module vm 'modules/vmjumpbox.module.bicep'  = {
+module vm 'modules/vmjumpbox.module.bicep'  =  if (deployJumbBox) {
   name: 'vmJumpboxDeployment'
   params: {
     name: vmJumpBox.name
@@ -73,7 +74,7 @@ module vm 'modules/vmjumpbox.module.bicep'  = {
   }
 }
 
-module bastion 'modules/bastion.module.bicep' = {
+module bastion 'modules/bastion.module.bicep' =  if (deployBastion){
   name: 'bastionDeployment'
   params: {
     name: bastionName
