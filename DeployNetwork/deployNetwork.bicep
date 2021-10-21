@@ -37,7 +37,7 @@ param vmJumpBox object
 //VARS
 // vars  Resource Names
 var env = resourceTags.Environment
-var vnetName = 'vnet-${env}-${suffix}'
+var vnetName = 'vnet-${suffix}-${env}'
 var bastionName = 'bastionHost${env}'
 
 
