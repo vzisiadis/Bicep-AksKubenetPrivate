@@ -15,7 +15,7 @@ PARAM_FILE="./${DEPLOYMENT_NAME}.parameters.${ENVIRONMENT}.json"
 APP_PREFIX=$(cat $PARAM_FILE | jq -r .parameters.appPrefix.value)
 RG_NAME="rg-${APP_PREFIX}-Cluster-${ENVIRONMENT}"
 RG_VNET_NAME="rg-${APP_PREFIX}-Networking-${ENVIRONMENT}"
-VNET_NAME="vnet-${ENVIRONMENT}-AKSPrivateKubenet"
+VNET_NAME="vnet-${APP_PREFIX}-${ENVIRONMENT}"
 LOCATION=northeurope
 
 
