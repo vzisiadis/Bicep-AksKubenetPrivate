@@ -19,7 +19,7 @@ VNET_NAME="vnet-${APP_PREFIX}-${ENVIRONMENT}"
 LOCATION=northeurope
 
 
-
+ 
 # Code - do not change anything here on deployment
 # 1. Set the right subscription
 printf "$blue" "*** Setting the subsription to $SUBSCRIPTION ***"
