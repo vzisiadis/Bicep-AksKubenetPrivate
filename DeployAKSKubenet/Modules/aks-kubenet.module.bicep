@@ -53,16 +53,18 @@ param userMaxPods int = 30
 param userAgentVMSize string = 'Standard_DS3_v2'
 
 @description('A CIDR notation IP range from which to assign service cluster IPs. It must not overlap with any Subnet IP ranges. It can be any private network CIDR such as, 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 ')
-param serviceCidr string = '10.0.0.0/16'
+param serviceCidr string = '10.255.0.0/16'
 
 @description('An IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range specified in serviceCidr')
-param dnsServiceIP string = '10.0.0.10'
+param dnsServiceIP string = '10.255.0.10'
 
 @description('A CIDR notation IP range from which to assign pod IPs when kubenet is used.')
-param podCidr string = '10.244.0.0/16'
+param podCidr string = '10.254.0.0/16'
 
 @description('A CIDR notation IP range assigned to the Docker bridge network. It must not overlap with any Subnet IP ranges or the Kubernetes service address range.')
-param dockerBridgeCidr string = '172.17.0.1/16'
+param dockerBridgeCidr string = '172.31.0.1/16'
+
+
 
 var aksLawsName = 'laws-${name}'
 
