@@ -20,7 +20,7 @@ param podCidr string
 param dockerBridgeCidr string
 param aksLogAnalyticsWSName string
 param systemAgentVMSize string
-param userAgentVMSize string = 'Standard_F8s_v2'
+param userAgentVMSize string 
 
 //Create Resources
 module aks 'Modules/aks-kubenet.module.bicep' = {
