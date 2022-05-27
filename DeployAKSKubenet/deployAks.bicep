@@ -2,25 +2,25 @@
 targetScope = 'resourceGroup'
 
 // PARAMS General
-// param suffix string = 'AKSPrivateKubenet'
+param resourceTags object = {}
+
+
 // params exported on param file
-param appPrefix string
-param resourceTags object
-param snetID string 
-param attachACR bool
+param aksName string 
+param aksRG string 
+param aksManagedRG string 
+param aksVnetRG string 
+param vnetName string 
+param aksSnetID string 
 param isAksPrivate bool
-param aksDnsPrefix string = 'cluster01'
-// param vnetRG string
-
-// //Role assignment params
-// @description('A new GUID used to identify the role assignment')
-// param roleNameGuid string = guid(resourceGroup().id)
-
-//VARS
-var aksName = 'aks-kubenet-${uniqueString(resourceGroup().id)}'
-
-var acrName = 'acrtt${uniqueString(resourceGroup().id)}' // must be globally unique
-//var NetworkContributorRoleAssignment = '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/4d97b98b-1d4f-4787-a291-c67834d212e7'
+param aksDnsPrefix string
+param serviceCidr string 
+param dnsServiceIP string
+param podCidr string 
+param dockerBridgeCidr string
+param aksLogAnalyticsWSName string
+param systemAgentVMSize string
+param userAgentVMSize string = 'Standard_F8s_v2'
 
 //Create Resources
 module aks 'Modules/aks-kubenet.module.bicep' = {
@@ -29,21 +29,20 @@ module aks 'Modules/aks-kubenet.module.bicep' = {
     name: aksName
     region: resourceGroup().location
     tags: resourceTags
-    vnetSubnetID: snetID
+    vnetSubnetID: aksSnetID
     isAksPrivate: isAksPrivate
-    aksDnsPrefix: aksDnsPrefix
-    appPrefix: appPrefix
+    aksDnsPrefix: aksDnsPrefix  
+    aksManagedRG: aksManagedRG 
+    serviceCidr: serviceCidr 
+    dnsServiceIP: dnsServiceIP
+    podCidr: podCidr
+    dockerBridgeCidr: dockerBridgeCidr
+    aksLawsName: aksLogAnalyticsWSName
+    systemAgentVMSize: systemAgentVMSize
+    userAgentVMSize: userAgentVMSize
   }
 }
 
-module acr 'Modules/acr.module.bicep' = if (attachACR) {
-  name: 'acrDeployment'
-  params: {
-    name: acrName
-    region: resourceGroup().location
-    tags: resourceTags
-  }
-}
 
 output aksID string = aks.outputs.aksID
 output aksName string = aks.outputs.aksName
@@ -52,5 +51,6 @@ output aksNodesRG string = aks.outputs.aksNodesRG
 output aksTenantID string = aks.outputs.identity.tenantId
 output aksSPID string = aks.outputs.identity.principalId
 output aksIdentityType string = aks.outputs.identity.type
-output acrID string = attachACR ? acr.outputs.acrID : ''
-output acrLoginServer string = attachACR ? acr.outputs.acrLoginServer  : ''
+output aksRG string = aksRG
+output aksVnetRG string = aksVnetRG
+output vnetName string = vnetName

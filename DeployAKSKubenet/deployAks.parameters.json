@@ -1,0 +1,52 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "aksName": {
+            "value": "aks001"
+        },
+        "aksDnsPrefix" : {
+             "value": "aks001-cluster01"   
+        },
+        "aksRG":{
+            "value": "rg-MyOrg-AppName-Networking-dev"
+        },
+        "aksManagedRG": {
+            "value": "rg-MyOrg-AppName-Networking-dev-MC"
+        },
+        "aksVnetRG": {
+            "value": "rg-MyOrg-AppName-Networking-dev"
+        },
+        "vnetName": {
+            "value": "vnet-MyOrg-AppName-Prod"
+        },
+        "aksSnetID": {
+            "value": "/subscriptions/xxxx-xxxx-xxxxx-xxxxx/resourceGroups/<aksVnetRG>/providers/Microsoft.Network/virtualNetworks/<vnetName>/subnets/<snet-aksNodes>"
+        },
+        "isAksPrivate": {
+            "value": true
+        },
+        "serviceCidr": {
+            "value": "172.16.0.0/16"
+        },
+        "dnsServiceIP": {
+            "value": "172.16.34.10"
+        },
+        "podCidr": {
+            "value": "172.17.0.0/16"
+        },
+        "dockerBridgeCidr": {
+            "value": "172.18.0.1/16"
+        },
+        "aksLogAnalyticsWSName" : {
+            "value": "aksLogAnalyticsWS"
+        },
+        "systemAgentVMSize" : {
+            "value": "Standard_DS2_v2"
+        },
+        "userAgentVMSize": {
+            "value": "Standard_DS3_v2"
+        }
+
+    }
+}

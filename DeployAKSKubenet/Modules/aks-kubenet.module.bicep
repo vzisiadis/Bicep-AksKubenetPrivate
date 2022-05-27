@@ -5,7 +5,6 @@ param region string
 param tags object
 param vnetSubnetID string
 param isAksPrivate bool
-param appPrefix string
 
 @description('Whether to enable Kubernetes Role-Based Access Control')
 param enableRBAC bool = true
@@ -14,7 +13,7 @@ param enableRBAC bool = true
 param aksDnsPrefix string
 
 @description('Name of the resource group containing agent pool nodes')
-param nodeResourceGroup string = 'rg-${appPrefix}-MC-${name}'
+param aksManagedRG string
 
 @minValue(0)
 @maxValue(1023)
@@ -32,7 +31,7 @@ param systemAgentCount int = 2
 param systemMaxPods int = 30
 
 //todo: add some reccomendations here
-param systemAgentVMSize string = 'Standard_DS2_v2'
+param systemAgentVMSize string
 
 @minValue(0)
 @maxValue(1023)
@@ -42,15 +41,15 @@ param userOsDiskSizeGB int = 120
 @minValue(0)
 @maxValue(1000)
 @description('Number of agents (VMs) to host docker containers. Allowed values must be in the range of 0 to 1000 (inclusive) for user pools and in the range of 1 to 1000 (inclusive) for system pools. The default value is 1.')
-param userAgentCount int = 2
+param userAgentCount int = 3
 
 @minValue(30)
 @maxValue(250)
 @description('Maximum number of pods that can run on a node')
-param userMaxPods int = 30
+param userMaxPods int = 90
 
 //todo: add some reccomendations here
-param userAgentVMSize string = 'Standard_DS3_v2'
+param userAgentVMSize string 
 
 @description('A CIDR notation IP range from which to assign service cluster IPs. It must not overlap with any Subnet IP ranges. It can be any private network CIDR such as, 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 ')
 param serviceCidr string = '10.255.0.0/16'
@@ -66,7 +65,8 @@ param dockerBridgeCidr string = '172.31.0.1/16'
 
 
 
-var aksLawsName = 'laws-${name}'
+@description('The log analytics workspace of AKS (for container monitoring etc)')
+param aksLawsName string 
 
 //TODO 1: conditional handling of enableAutoScaling: false
 //TODO 2: Check if gpuInstanceProfile is needed
@@ -83,7 +83,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2021-03-01' = {
   properties: {
     enableRBAC: enableRBAC
     dnsPrefix: aksDnsPrefix
-    nodeResourceGroup: nodeResourceGroup
+    nodeResourceGroup: aksManagedRG
     agentPoolProfiles: [
       {
         name: 'systempool'
@@ -120,7 +120,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2021-03-01' = {
         mode: 'User'
         enableAutoScaling: true
         minCount: userAgentCount
-        maxCount: 2 * userAgentCount + 1
+        maxCount: 5 * userAgentCount + 1
         vnetSubnetID: vnetSubnetID
         availabilityZones: [
           '1'
