@@ -21,22 +21,22 @@
             "value": "vnet-MyOrg-AppName-Prod"
         },
         "aksSnetID": {
-            "value": "/subscriptions/9f7d100a-8183-4f45-bf95-6b119241cce0/resourceGroups/rg-MyOrg-AppName-Networking-dev/providers/Microsoft.Network/virtualNetworks/vnet-MyOrg-AppName-Prod/subnets/snet-aksNodes"
+            "value": "/subscriptions/xxxx-xxxx-xxxxx-xxxxx/resourceGroups/<aksVnetRG>/providers/Microsoft.Network/virtualNetworks/<vnetName>/subnets/<snet-aksNodes>"
         },
         "isAksPrivate": {
             "value": true
         },
         "serviceCidr": {
-            "value": "10.0.0.0/16"
+            "value": "172.16.0.0/16"
         },
         "dnsServiceIP": {
-            "value": "10.0.0.10"
+            "value": "172.16.34.10"
         },
         "podCidr": {
-            "value": "10.244.0.0/16"
+            "value": "172.17.0.0/16"
         },
         "dockerBridgeCidr": {
-            "value": "172.17.0.1/16"
+            "value": "172.18.0.1/16"
         },
         "aksLogAnalyticsWSName" : {
             "value": "aksLogAnalyticsWS"

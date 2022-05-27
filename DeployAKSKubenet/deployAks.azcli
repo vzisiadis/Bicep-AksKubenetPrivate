@@ -1,0 +1,11 @@
+# 1. Set the right subscriptio
+az account set --subscription "$SUBSCRIPTION"
+
+# 2. start the BICEP deployment
+az deployment group create -f ./deployAks.bicep -g $RG_NAME -p deployAks.parameters.json
+
+# GET Some properties, look for aksSPID
+az deployment group show --name deployAks -g $RG_NAME --query properties.outputs
+
+# run 
+az role assignment create --assignee $aksSPID --scope $VNET_ID --role "Network Contributor"
