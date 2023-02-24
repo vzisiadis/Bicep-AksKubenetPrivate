@@ -7,10 +7,11 @@ param suffix string = 'AKS-TestBed'
 param resourceTags object
 param deployJumbBox bool
 param deployBastion bool
+param deployAgic bool
 param appPrefix string
 
 // PARAMS Vnet
-param vnetAddressSpace string = '192.168.0.0/24'
+param vnetAddressSpace string = '192.168.0.0/16'
 param aksSubnet object = {
   name: 'snet-aksNodes'
   subnetPrefix: '192.168.0.0/25'
@@ -29,6 +30,15 @@ param snetAdmin object = {
 param snetBastion object = {
   name: 'AzureBastionSubnet' //fixed name of subnet de-jure
   subnetPrefix: '192.168.0.224/27'
+}
+
+// Although a /24 subnet isn't required per Application Gateway v2 SKU deployment, it is highly recommended. 
+// This is to ensure that Application Gateway v2 has sufficient space for autoscaling expansion and maintenance upgrades. 
+// You should ensure that the Application Gateway v2 subnet has sufficient address space to accommodate the number of instances required to serve your maximum expected traffic. 
+// If you specify the maximum instance count, then the subnet should have capacity for at least that many addresses.
+param snetAgic object = {
+  name: 'snet-agic'
+  subnetPrefix: '192.168.1.0/24'
 }
 
 //params VM
@@ -54,6 +64,8 @@ module vnet 'modules/VNet.module.bicep' = {
     snetPE: snetPE
     snetAdmin: snetAdmin
     snetBastion: snetBastion
+    deployAgic: deployAgic
+    snetAgic: snetAgic
     vnetAddressSpace: vnetAddressSpace
     tags: resourceTags
   }
@@ -88,5 +100,6 @@ module bastion 'modules/bastion.module.bicep' =  if (deployBastion){
 output aksSubnetID string = vnet.outputs.snetAksID
 output vnetName string = vnet.outputs.vnetName
  output appPrefix string = appPrefix
+output agicSubnetID string = vnet.outputs.snetAgicID
 // output akvID string = keyVault.outputs.id
 // output akvURL string = 'https://${toLower(keyVault.outputs.name)}.vault.azure.net/'//https://kv-dev-databricksexplore.vault.azure.net/

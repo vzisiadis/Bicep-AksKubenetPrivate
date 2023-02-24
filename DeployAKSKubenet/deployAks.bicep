@@ -21,6 +21,8 @@ param dockerBridgeCidr string
 param aksLogAnalyticsWSName string
 param systemAgentVMSize string
 param userAgentVMSize string 
+param deployAgic bool
+param agicSubnet string
 
 //Create Resources
 module aks 'Modules/aks-kubenet.module.bicep' = {
@@ -40,6 +42,8 @@ module aks 'Modules/aks-kubenet.module.bicep' = {
     aksLawsName: aksLogAnalyticsWSName
     systemAgentVMSize: systemAgentVMSize
     userAgentVMSize: userAgentVMSize
+    deployAgic: deployAgic
+    agicSubnet: agicSubnet
   }
 }
 

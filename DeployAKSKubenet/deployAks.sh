@@ -7,15 +7,17 @@ green='\e[1;32m%s\e[0m\n'
 blue='\e[1;34m%s\e[0m\n'
 
 # Set your Azure Subscription
-SUBSCRIPTION=9f7d100a-8183-4f45-bf95-6b119241cce0
+SUBSCRIPTION=xxxxxxxxxxxxxxxxxxxxx
 
 DEPLOYMENT_NAME=deployAks
+
+SETTINGS_FILE="../general.parameters.json"
+LOCATION=$(cat $SETTINGS_FILE | jq -r .parameters.location.value)
+
 PARAM_FILE="./${DEPLOYMENT_NAME}.parameters.json"
 RG_NAME=$(cat $PARAM_FILE | jq -r .parameters.aksRG.value)
 RG_VNET_NAME=$(cat $PARAM_FILE | jq -r .parameters.aksVnetRG.value)
 VNET_NAME=$(cat $PARAM_FILE | jq -r .parameters.vnetName.value)
-LOCATION=westeurope
-
 
  
 # Code - do not change anything here on deployment
@@ -23,8 +25,11 @@ LOCATION=westeurope
 printf "$blue" "*** Setting the subsription to $SUBSCRIPTION ***"
 az account set --subscription "$SUBSCRIPTION"
 
+# 2. Create AKS Resource group if not exists
+az group create --name $RG_NAME --location $LOCATION
+printf "$green" "*** Resource Group $SUBSCRIPTION created (or Existed) ***"
 
-# 2. start the BICEP deployment
+# 3. start the BICEP deployment
 printf "$blue" "starting BICEP AKS deployment"
 az deployment group create \
     -f ./$DEPLOYMENT_NAME.bicep \

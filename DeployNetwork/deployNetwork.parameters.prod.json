@@ -26,6 +26,9 @@
         },
         "deployBastion": {
             "value": false
-        }
+        },
+        "deployAgic": {
+            "value": false
+        }            
     }
 }
